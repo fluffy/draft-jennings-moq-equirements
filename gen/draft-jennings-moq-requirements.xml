@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- name="GENERATOR" content="github.com/mmarkdown/mmark Mmark Markdown Processor - mmark.miek.nl" -->
+<rfc version="3" ipr="trust200902" docName="draft-jennings-moq-reqs-00" submissionType="IETF" category="info" xml:lang="en" xmlns:xi="http://www.w3.org/2001/XInclude" indexInclude="false" consensus="true">
+
+<front>
+<title abbrev="moq">Media Delivery Over QUIC Requirements</title><seriesInfo value="draft-jennings-moq-reqs-00" stream="IETF" status="informational" name="Internet-Draft"></seriesInfo>
+<author initials="C." surname="Jennings" fullname="Cullen Jennings"><organization>cisco</organization><address><postal><street></street>
+</postal><email>fluffy@iii.ca</email>
+</address></author><author initials="S." surname="Nandakumar" fullname="Suhas Nandakumar"><organization>cisco</organization><address><postal><street></street>
+</postal><email>snandaku@cisco.com</email>
+</address></author><date/>
+<area>transport</area>
+<workgroup></workgroup>
+<keyword>realtime</keyword>
+<keyword>streaming</keyword>
+<keyword>quic</keyword>
+
+<abstract>
+<t>Delivering media over QUIC has piqued interest among use-cases that span the streaming media and real-time media domains, as is evident from the discussions on the &quot;moq@ietf.org&quot; mailing list. Any solution that addresses these use-cases should take into account requirements from these domains.</t>
+<t>This document is an attempt to compile a common set of requirements that is charactersitics of use-cases that a proposed solution might attempt to solve.</t>
+</abstract>
+
+</front>
+
+<middle>
+
+<section anchor="introduction"><name>Introduction</name>
+<t>Delivering media over QUIC has piqued interest among use-cases that span the streaming media and real-time media domains, as is evident from the discussions on the &quot;moq@ietf.org&quot; mailing list. Any solution that addresses these use-cases should take into account requirements from these domains.</t>
+<t>draft-gruessing-moq-requirements-00.txt captures various usecases and IETF drafts the are currently active for delivering media over QUIC. This document considers its inputs from draft-gruessing-moq-requirements-00.txt as well as active discusisons on the &quot;moq@ietf.org&quot; mailing list with a scope to distil the high level requirements for use-cases/applications where a UDP based transport (like QUIC) is considered and has characteristics of real-time and streaming media flows.</t>
+</section>
+
+<section anchor="contributing"><name>Contributing</name>
+<t>All significant discussion of development of this protocol is in the GitHub issue tracker at TODO.</t>
+</section>
+
+<section anchor="terminology"><name>Terminology</name>
+
+<ul>
+<li>Relay - a server in the cloud that can receive subscriptions and send data it receives in.
+publish to other endpoints that have subscribed to the data.</li>
+<li>Sender/Publisher: An endpoint that sends data to a Relay.</li>
+<li>Receiver/Subscribers: An endpoint that subscribes to data from Relay and receives data. Relays can act as
+subscribers to other relays.</li>
+<li>Client: An endpoint that acts as a Publisher, Subscriber, or both.</li>
+<li>Upstream: Sending data from Publisher to Relay</li>
+<li>Downstream: Sending data from Relay to a Subscriber</li>
+</ul>
+</section>
+
+<section anchor="use-cases"><name>Use cases</name>
+<t>Following lists a sampling of usecases that could be benefitted by the media delivery solution as part of the &quot;media-over-quic&quot; efforts</t>
+
+<ul>
+<li><t>Live stream a football game on multiple devices and have the playout synchronized but also have the overall; latency be fairly low (sub seconds aprox 250 ms on same contient )</t>
+</li>
+<li><t>Live auctions.</t>
+</li>
+<li><t>Gaming where all players need to see <u format="char-num">“</u>moves<u format="char-num">”</u> or <u format="char-num">“</u>cards<u format="char-num">”</u> at same time.</t>
+</li>
+<li><t>Live Music with musicians all in same locations.</t>
+</li>
+<li><t>Distributed band with interactive media session in parallel.</t>
+</li>
+<li><t>Push to Talk Media for Fronline communicantions.</t>
+</li>
+<li><t>[ More to come here ?]</t>
+</li>
+</ul>
+</section>
+
+<section anchor="requirements"><name>Requirements</name>
+
+<ul>
+<li><t>The solution SHALL deliver the media where playout can be synchronized within 50 ms.</t>
+</li>
+<li><t>Various media qualities from extremely low bitrate audio to high-end video SHALL be supported.</t>
+</li>
+<li><t>The solution SHALL be extensibe in supporting various media types, such as audio, video, 3d models, volumetric video, light-fields, game moves and so on.</t>
+</li>
+<li><t>The solution SHALL be able to support highly scalable (streaming to millions of viewers) as well as 1:1 use-cases.</t>
+</li>
+<li><t>The soluton SHALL allow for leveraging on path caches like CDNs wherever applicable to improve the latency and bandwidth requirements.</t>
+</li>
+<li><t>The solution should work over UDP with servers / caches with public IP addresses.</t>
+</li>
+<li><t>The solution SHALL support for multiple media encodings and ability for clients to select the appropriate encoding . Layered encodings (dependent) and simulcast (independent) encodings shall be supported.</t>
+</li>
+<li><t>The solution SHALL provides at least the circuit break level for the congestion control. It shall provide information for encodor rate adaptation in senders.</t>
+</li>
+<li><t>The soution SHALL support the plug-in ability for new congestion control algorithms.</t>
+</li>
+<li><t>The solution SHALL provide End-to-End encryption and confidentiality of the media data, possibly keyable with MLS.</t>
+</li>
+<li><t>The solution shall enable plug in and negotiable error recovery/correction per hop.</t>
+</li>
+<li><t>The solution shall enable the API to provide hints about the relative importance, reliability and latency characteristics for the various media flows.</t>
+</li>
+<li><t>The solution shall enable cloud first deployments - cloud friendly, horizontally scalable and highly available as with a typical modern cloud application.</t>
+</li>
+<li><t>The solution shall support a relay to move senders and receivers to talk to different relay (like HTTP redirect) to enable things like moving traffic between relays, say due to relay shutdown or as instructed by a load balancer.</t>
+</li>
+<li><t>The solution should enable easy to use developer API.</t>
+</li>
+<li><t>The solution shall enable an easy way to map the constructs to last mile streaming models like HLS/DASH.</t>
+</li>
+<li><t>The solution shall enable mapping to real-time point to point media constructs in the likes SIP/WebRTC.</t>
+</li>
+<li><t>[ More to come here ??]</t>
+</li>
+</ul>
+</section>
+
+</middle>
+
+<back>
+
+<section anchor="acknowledgments"><name>Acknowledgments</name>
+<t>TODO</t>
+</section>
+
+</back>
+
+</rfc>
